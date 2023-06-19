@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning Vue</title>
+    <script src="https://unpkg.com/vue@3.0.2"></script>
+    <style>
+      .box {
+        padding: 100px 0;
+        width: 400px;
+        text-align: center;
+        background: #ddd;
+        margin: 20px;
+        display: inline-block;
+      }
+
+      ul, li, h3, p {
+        margin: 0;
+        padding: 0;
+      }
+
+      li {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 10px 200px;
+        border-radius: 5px;
+      }
+
+      li > img {
+        height: 100px;
+        width: 70px;
+      }
+
+      li.fav {
+        background: #ff9292;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Learning Vue!</h1>
+    <div id="app">
+      <div v-if="showBooks">
+        <!-- "showBooks" is a data variable that is "true" renders the inner <p> tag -->
+        <p>{{title}} by {{author}} and rated {{rating}}/10</p>
+      </div>
+      <button @click="rating++">Click</button>
+      <button v-on:click="changeTitle">Change Title</button>
+      <!-- 'v' represents Vue & we can assign any event following "on" separated by a colon in the directive -->
+      <button @click="toggleShowBooks">
+        <span v-if="showBooks">Hide Books</span>
+        <!-- <span v-if="!showBooks">Show Books</span> -->
+        <!-- We can alternatively use v-else directive-->
+        <span v-else>Show Books</span>
+      </button>
+
+      <div v-show="showBooks">currently showing books</div>
+
+      <div class="box" @mouseover="handleEvent($event, 5)">
+        mouseover (enter)
+      </div>
+      <div class="box" @mouseleave="handleEvent">mouseleave</div>
+      <div class="box" @dblclick="handleEvent">double click</div>
+      <div class="box" @mousemove="handleMousemove">position - {{x}} {{y}}</div>
+
+      <div v-if="showBooks">
+        <ul>
+          <li v-for="book in filteredBooks" :class="{fav: book.isFav}" @click="toggleFav(book)">  <!-- "fav" here is a dynamic class -->
+            <!-- rendering lists-->
+            <h3>{{book.title}}</h3>
+            <p>{{book.author}}</p>
+            <img :src="book.img" :alt="book.title" />
+            <!-- attribute binding -->
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Now, the Vue app controls everything inside this <div> -->
+    <script src="./app.js"></script>
+  </body>
+</html>
